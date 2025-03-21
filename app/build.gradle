@@ -26,6 +26,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -40,7 +43,7 @@ dependencies {
 
     def room_version = "2.6.1"
 
-    implementation "androidx.room:room-runtime:$room_version"
+    implementation libs.room.runtime
 
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See KSP Quickstart to add KSP to your build
@@ -51,7 +54,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
     // optional - RxJava2 support for Room
-    implementation "androidx.room:room-rxjava2:$room_version"
+    /*implementation "androidx.room:room-rxjava2:$room_version"
 
     // optional - RxJava3 support for Room
     implementation "androidx.room:room-rxjava3:$room_version"
@@ -63,5 +66,5 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     // optional - Paging 3 Integration
-    implementation "androidx.room:room-paging:$room_version"
+    implementation "androidx.room:room-paging:$room_version"*/
 }

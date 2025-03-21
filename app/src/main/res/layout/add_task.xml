@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Content area-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/taskNameField"
+            android:text="@string/task_name"
+            android:layout_marginTop="20dp"
+            />
+
+        <EditText
+            android:id="@+id/taskNameField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints="task name"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/buttonSelectDate"
+            android:text="@string/due_date_not_set"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <Button
+            android:id="@+id/buttonSelectDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_date"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/textViewDueTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/due_time_not_set"
+            android:layout_marginBottom="10dp"
+            />
+
+        <Button
+            android:id="@+id/buttonSelectTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_time"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@color/black"
+            android:elevation="10dp"
+            />
+
+    </LinearLayout>
+
+    <!-- save button area-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/buttonSaveTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:text="@string/save_task"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@color/black"
+            android:layout_marginBottom="30dp"
+            />
+    </LinearLayout>
+</LinearLayout>

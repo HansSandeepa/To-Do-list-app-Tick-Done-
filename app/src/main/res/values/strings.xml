@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">To-do List app</string>
     <string name="addButton" >+</string>
+    <string name="task_name">Task Name</string>
+    <string name="select_date">Select Date</string>
+    <string name="due_date_not_set">Due Date: Not Set</string>
+    <string name="due_time_not_set">Due Time: Not Set</string>
+    <string name="select_time">Select Time</string>
+    <string name="save_task">Save Task</string>
 </resources>
