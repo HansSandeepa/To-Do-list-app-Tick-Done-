@@ -1,5 +1,6 @@
 package com.example.to_dolistapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -50,11 +51,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = binding.recyclerView;
         //addTaskView = binding;
 
+
+        //show add task model
+        showAddTaskModel();
     }
 
     private void showAddTaskModel(){
         addTaskBtn.setOnClickListener(v -> {
-
+            startActivity(new Intent(MainActivity.this, AddTaskActivity.class));
         });
     }
 }

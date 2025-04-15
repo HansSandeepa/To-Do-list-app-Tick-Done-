@@ -21,6 +21,8 @@
             android:labelFor="@+id/taskNameField"
             android:text="@string/task_name"
             android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             />
 
         <EditText
@@ -28,7 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:autofillHints="task name"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/black"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -37,6 +41,8 @@
             android:text="@string/due_date_not_set"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             />
 
         <Button
@@ -55,6 +61,8 @@
             android:layout_marginTop="16dp"
             android:text="@string/due_time_not_set"
             android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             />
 
         <Button
