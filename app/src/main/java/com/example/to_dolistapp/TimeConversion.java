@@ -1,9 +1,5 @@
 package com.example.to_dolistapp;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 

@@ -2,16 +2,11 @@ package com.example.to_dolistapp;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.to_dolistapp.databinding.AddTaskBinding;
-
 import java.util.Calendar;
 
 public class AddTaskActivity extends AppCompatActivity {
