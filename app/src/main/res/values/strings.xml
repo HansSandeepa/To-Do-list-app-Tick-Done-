@@ -8,4 +8,5 @@
     <string name="select_time">Select Time</string>
     <string name="save_task">Save Task</string>
     <string name="title_activity_add_task">add task activity</string>
+    <string name="selected_date">Selected Date:</string>
 </resources>
