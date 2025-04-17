@@ -9,4 +9,6 @@
     <string name="save_task">Save Task</string>
     <string name="title_activity_add_task">add task activity</string>
     <string name="selected_date">Selected Date:</string>
+    <string name="please_select_a_date">Please Select a date!</string>
+    <string name="please_select_a_time">Please select a time!</string>
 </resources>

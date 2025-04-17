@@ -27,9 +27,9 @@
 
         <EditText
             android:id="@+id/taskNameField"
-            android:layout_width="300dp"
-            android:layout_marginHorizontal="35dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
+            android:layout_marginHorizontal="35dp"
             android:autofillHints="task name"
             android:inputType="text"
             android:textColor="@color/black"
@@ -80,6 +80,13 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/dateValidation"
+            android:textSize="15sp"
+            android:textColor="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
             android:id="@+id/textViewDueTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,6 +129,13 @@
                 android:textColor="@color/darkYellow"
                 />
         </LinearLayout>
+
+        <TextView
+        android:id="@+id/timeValidation"
+        android:textSize="15sp"
+        android:textColor="@color/red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
         <!-- standard time container -->
         <TextView
