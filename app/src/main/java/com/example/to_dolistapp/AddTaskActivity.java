@@ -177,7 +177,7 @@ public class AddTaskActivity extends AppCompatActivity {
             binding.taskNameField.setError("Task name cannot be empty!");
             return false;
         } else if (regexCheck(taskName, taskNameRegex)) {
-            binding.taskNameField.setError("Task must have less that 100 letters!");
+            binding.taskNameField.setError("Task must have less than 100 letters!");
             return false;
         }
 

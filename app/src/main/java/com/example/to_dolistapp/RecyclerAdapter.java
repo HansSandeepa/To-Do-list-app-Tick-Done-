@@ -1,5 +1,5 @@
 package com.example.to_dolistapp;
-/*
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +13,9 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private final List<Tasks> tasksList;
+    private final List<TaskModel> tasksList;
 
-    public RecyclerAdapter(List<Tasks> tasksList) {
+    public RecyclerAdapter(List<TaskModel> tasksList) {
         this.tasksList = tasksList;
     }
 
@@ -79,4 +79,3 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     }
 }
-*/
