@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +36,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String taskName = tasksList.get(position).getTaskName();
 
         holder.setTaskItemData(id, date, time, taskName);
+
+    //checkbox clicked listener
+        checkBoxClicked(holder,id);
     }
 
     @Override
@@ -81,5 +85,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             this.taskName.setText(taskName);
         }
 
+    }
+
+    /* ---event listeners--- */
+    //checkbox clicked listener
+    void checkBoxClicked(RecyclerAdapter.ViewHolder holder,int task_id){
+        holder.checkBox.setOnCheckedChangeListener(null);   //remove existing listener to prevent multiple listeners on recycler view
+
+        //set new OnCheckedChangeListener for THIS specific item
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                try (TasksDatabase db = new TasksDatabase(holder.itemView.getContext())) {
+                    db.deleteTask(task_id);
+                    notifyItemRemoved(holder.getAdapterPosition());
+                    Toast.makeText(holder.itemView.getContext() ,"Task Completed!", Toast.LENGTH_LONG).show();
+                }
+                catch (Exception e){
+                    Toast.makeText(holder.itemView.getContext() ,"Something went wrong!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }
