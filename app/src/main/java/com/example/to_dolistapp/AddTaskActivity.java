@@ -2,6 +2,7 @@ package com.example.to_dolistapp;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -160,7 +161,10 @@ public class AddTaskActivity extends AppCompatActivity {
             //validate data
             if (insertValidation()){
                 if (db.addTask(taskName,selectedDate, selectTime)){
-                    Toast.makeText(AddTaskActivity.this, "Task added successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTaskActivity.this, "Task added successfully!", Toast.LENGTH_LONG).show();
+
+                    //new MainActivity().showDataInRecyclerView();    //update recycler view when task is added
+                    startActivity(new Intent(AddTaskActivity.this,MainActivity.class));
                 }else {
                     Toast.makeText(AddTaskActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                 }

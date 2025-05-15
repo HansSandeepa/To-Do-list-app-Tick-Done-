@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,11 +29,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
+        int id = tasksList.get(position).getId();
         String date = tasksList.get(position).getDate();
         String time = tasksList.get(position).getTime();
         String taskName = tasksList.get(position).getTaskName();
 
-        holder.setTaskItemData(date, time, taskName);
+        holder.setTaskItemData(id, date, time, taskName);
     }
 
     @Override
@@ -42,12 +44,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
  
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView date,time,taskName;
+        private final TextView id,date,time,taskName;
         private final CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            id = itemView.findViewById(R.id.item_id);
             date = itemView.findViewById(R.id.item_date);
             time = itemView.findViewById(R.id.item_time);
             taskName = itemView.findViewById(R.id.item_name);
@@ -71,7 +74,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             return checkBox;
         }
 
-        public void setTaskItemData(String date, String time, String taskName){
+        public void setTaskItemData(int id, String date, String time, String taskName){
+            this.id.setText(String.valueOf(id));
             this.date.setText(date);
             this.time.setText(time);
             this.taskName.setText(taskName);

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showDataInRecyclerView(){
+    public void showDataInRecyclerView(){
         db = new TasksDatabase(MainActivity.this);
         Cursor c = db.getTasks();
 
@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
         tasksList = new ArrayList<>();
 
-        Log.d("RecyclerviewDebug","Number of fetched tasks: " + tasksList.size());
         while (c.moveToNext()){
             tasksList.add(new TaskModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3)));
         }
