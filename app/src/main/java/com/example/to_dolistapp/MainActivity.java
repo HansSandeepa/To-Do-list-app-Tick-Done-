@@ -3,9 +3,7 @@ package com.example.to_dolistapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -21,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding binding;
 
     Button addTaskBtn;
     RecyclerView recyclerView;
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Inflate the layout using View Binding
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.to_dolistapp.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         // Set the root view as the content view
         setContentView(binding.getRoot());
@@ -60,9 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAddTaskModel(){
-        addTaskBtn.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, AddTaskActivity.class));
-        });
+        addTaskBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddTaskActivity.class)));
     }
 
     public void showDataInRecyclerView(){

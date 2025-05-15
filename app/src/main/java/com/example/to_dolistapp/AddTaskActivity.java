@@ -205,24 +205,6 @@ public class AddTaskActivity extends AppCompatActivity {
         return true;
     }
 
-    //update validation
-    private boolean updateValidation(){
-        boolean haveData = false;
-
-        //empty check
-        if (taskName.isEmpty()){
-            binding.taskNameField.setError("Task name cannot be empty!");
-            return false;
-        }
-
-        //task name regex check
-        if (regexCheck(taskName, taskNameRegex)) {
-            binding.taskNameField.setError("Task must have less that 100 letters!");
-            return false;
-        }
-        return true;
-    }
-
 
     //regex pattern compilation
     private boolean regexCheck(String input,String regex){

@@ -1,14 +1,17 @@
 package com.example.to_dolistapp;
 
+import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -39,6 +42,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     //checkbox clicked listener
         checkBoxClicked(holder,id);
+
+        //setup red border for overdue tasks
+        setOverdueBorder(holder,id);
     }
 
     @Override
@@ -62,22 +68,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         }
 
-        public TextView getDate() {
-            return date;
-        }
-
-        public TextView getTime() {
-            return time;
-        }
-
-        public TextView getTaskName() {
-            return taskName;
-        }
-
-        public CheckBox getCheckBox() {
-            return checkBox;
-        }
-
         public void setTaskItemData(int id, String date, String time, String taskName){
             this.id.setText(String.valueOf(id));
             this.date.setText(date);
@@ -87,24 +77,54 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     }
 
+    /* ---Overdue task list--- */
+    private void setOverdueBorder(RecyclerAdapter.ViewHolder holder,int task_id){
+
+        try (TasksDatabase db = new TasksDatabase(holder.itemView.getContext())) {
+            String date,time;
+//
+//            //get today's date and current time
+//            today = TimeConversion.currentDate();
+//            curTime = TimeConversion.currentTime();
+//
+            //get overdue time and of event
+            Cursor c = db.getTaskTimeAndDate(task_id);
+            if (c.moveToFirst()){
+                date = c.getString(0);
+                time = c.getString(1);
+
+                Log.d("DateDebug",date);
+                Log.d("DateDebug",time);
+
+                //setup overdue styles
+                if(TimeConversion.isDateTimeInThePast(date,time)){
+                    Drawable overdueBorder = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.overdue_task_item_border);
+                    holder.itemView.setBackground(overdueBorder);
+                    holder.taskName.setTextColor(Color.RED);
+                    holder.date.setTextColor(Color.RED);
+                    holder.time.setTextColor(Color.RED);
+                }
+
+            }
+        }
+    }
+
+
     /* ---event listeners--- */
     //checkbox clicked listener
-    void checkBoxClicked(RecyclerAdapter.ViewHolder holder,int task_id){
+    private void checkBoxClicked(RecyclerAdapter.ViewHolder holder,int task_id){
         holder.checkBox.setOnCheckedChangeListener(null);   //remove existing listener to prevent multiple listeners on recycler view
 
         //set new OnCheckedChangeListener for THIS specific item
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                try (TasksDatabase db = new TasksDatabase(holder.itemView.getContext())) {
-                    db.deleteTask(task_id);
-                    notifyItemRemoved(holder.getAdapterPosition());
-                    Toast.makeText(holder.itemView.getContext() ,"Task Completed!", Toast.LENGTH_LONG).show();
-                }
-                catch (Exception e){
-                    Toast.makeText(holder.itemView.getContext() ,"Something went wrong!", Toast.LENGTH_LONG).show();
-                }
+            try (TasksDatabase db = new TasksDatabase(holder.itemView.getContext())) {
+                db.deleteTask(task_id);
+                notifyItemRemoved(holder.getAdapterPosition());
+                Toast.makeText(holder.itemView.getContext() ,"Task Completed!", Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e){
+                Toast.makeText(holder.itemView.getContext() ,"Something went wrong!", Toast.LENGTH_LONG).show();
             }
         });
     }

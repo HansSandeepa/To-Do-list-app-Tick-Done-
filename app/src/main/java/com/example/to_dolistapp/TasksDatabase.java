@@ -32,38 +32,20 @@ public class TasksDatabase extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean updateTask(String _taskName, String _date, String _time, int _id) {
+    public void deleteTask(int _id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        if (_taskName != null){
-            cv.put("task_name", _taskName);
-        }
-        if (_date != null){
-            cv.put("date", _date);
-        }
-        if (_time != null){
-            cv.put("time", _time);
-        }
         Cursor c = db.rawQuery("SELECT * FROM Tasks WHERE id = ?", new String[]{String.valueOf(_id)});
         if (c.getCount() > 0){
             c.close();
-            long result = db.update("Tasks", cv, "id = ?", new String[]{String.valueOf(_id)});
-            return result != -1;
+            db.delete("Tasks","id = ?", new String[]{String.valueOf(_id)});
+            return;
         }
         c.close();
-        return false;
     }
 
-    public boolean deleteTask(int _id) {
+    public Cursor getTaskTimeAndDate(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM Tasks WHERE id = ?", new String[]{String.valueOf(_id)});
-        if (c.getCount() > 0){
-            c.close();
-            long result = db.delete("Tasks","id = ?", new String[]{String.valueOf(_id)});
-            return result != -1;
-        }
-        c.close();
-        return false;
+        return db.rawQuery("SELECT date, time FROM Tasks WHERE id = ?", new String[]{String.valueOf(id)});
     }
 
     public Cursor getTasks() {

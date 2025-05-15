@@ -3,7 +3,9 @@ package com.example.to_dolistapp;
 public class TaskModel {
 
     private final int id;
-    private final String taskName,date,time;
+    private final String taskName;
+    private final String date;
+    private final String time;
 
     public TaskModel(int id, String taskName, String date, String time) {
         this.id = id;
