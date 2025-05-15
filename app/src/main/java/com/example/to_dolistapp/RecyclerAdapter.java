@@ -120,11 +120,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             try (TasksDatabase db = new TasksDatabase(holder.itemView.getContext())) {
                 db.deleteTask(task_id);
-                notifyItemRemoved(holder.getAdapterPosition());
-                Toast.makeText(holder.itemView.getContext() ,"Task Completed!", Toast.LENGTH_LONG).show();
+                int curPosition = holder.getAdapterPosition();
+
+                if(curPosition != RecyclerView.NO_POSITION){
+                    tasksList.remove(curPosition);
+                    notifyItemRemoved(curPosition);
+                    notifyItemRangeChanged(curPosition,tasksList.size());
+
+                    Toast.makeText(holder.itemView.getContext() ,"Task Completed!", Toast.LENGTH_LONG).show();
+                } else{
+                    Log.w("RecyclerAdapter", "Could not get valid adapter position for deletion.");
+                    Toast.makeText(holder.itemView.getContext() ,"Something went wrong!", Toast.LENGTH_LONG).show();
+                }
             }
             catch (Exception e){
                 Toast.makeText(holder.itemView.getContext() ,"Something went wrong!", Toast.LENGTH_LONG).show();
+                buttonView.setChecked(false);
             }
         });
     }
