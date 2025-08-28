@@ -10,6 +10,27 @@
     >
 
     <LinearLayout
+        android:id="@+id/imageContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:id="@+id/no_tasks_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/no_tasks_img"
+            android:src="@drawable/no_tasks_found"
+            android:visibility="visible"
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/recyclerContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,12 +39,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
+        android:visibility="visible"
         >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
         </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>

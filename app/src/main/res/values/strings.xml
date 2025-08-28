@@ -11,4 +11,5 @@
     <string name="selected_date">Selected Date:</string>
     <string name="please_select_a_date">Please Select a date!</string>
     <string name="please_select_a_time">Please select a time!</string>
+    <string name="no_tasks_img">no tasks img</string>
 </resources>
