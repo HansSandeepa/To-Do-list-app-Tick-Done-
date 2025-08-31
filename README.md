@@ -57,7 +57,7 @@ Contributions are welcome! Please open issues or submit pull requests for improv
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](https://github.com/HansSandeepa/To-Do-list-app-Tick-Done-/blob/main/LICENSE).
 
 ## Author
 
@@ -65,4 +65,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-*Tick off your tasks, and get things done with **Tick Done**!*
+*Tick off your tasks, and get things done with **Tick&Done**!*
