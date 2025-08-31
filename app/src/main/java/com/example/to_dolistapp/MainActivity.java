@@ -3,7 +3,9 @@ package com.example.to_dolistapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,7 +20,7 @@ import com.example.to_dolistapp.databinding.ActivityMainBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnTasksEmptyListener{
 
     Button addTaskBtn;
     RecyclerView recyclerView;
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     List<TaskModel> tasksList;
     RecyclerAdapter recyclerAdapter;
     TasksDatabase db;
-
+    ImageView noTasksImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         // get xml components from binding class
         addTaskBtn = binding.addTaskBtn;
         recyclerView = binding.recyclerView;
-
+        noTasksImageView = binding.noTasksImg;
         //show data in recycler view
         showDataInRecyclerView();
 
@@ -63,25 +65,64 @@ public class MainActivity extends AppCompatActivity {
     public void showDataInRecyclerView(){
         db = new TasksDatabase(MainActivity.this);
         Cursor c = db.getTasks();
-
-        if(c.getCount() == 0){
-            Toast.makeText(this,"No tasks found",Toast.LENGTH_LONG).show();
-            return;
-        }
-
         tasksList = new ArrayList<>();
 
-        while (c.moveToNext()){
-            tasksList.add(new TaskModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3)));
+        if(c != null && c.getCount() > 0){
+            while (c.moveToNext()){
+                tasksList.add(new TaskModel(c.getInt(0),c.getString(1),c.getString(2),c.getString(3)));
+            }
+        }
+        if (c != null){
+            c.close();
         }
 
         //initialize recycler view
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
 
-        recyclerAdapter = new RecyclerAdapter(tasksList);
+        recyclerAdapter = new RecyclerAdapter(tasksList, this);
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
+
+        checkIfTasksEmpty();
+    }
+
+    private void checkIfTasksEmpty(){
+        if (tasksList.isEmpty()){
+            onTaskEmpty();
+        }else{
+            onTaskNotEmpty();
+        }
+    }
+
+    @Override
+    public void onTaskEmpty(){
+        if(recyclerView != null){
+            recyclerView.setVisibility(View.GONE);
+        }
+        if (noTasksImageView != null){
+            noTasksImageView.setVisibility(View.VISIBLE);
+        }
+        Toast.makeText(this,"No tasks found",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTaskNotEmpty() {
+        if(recyclerView != null){
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+        if (noTasksImageView != null){
+            noTasksImageView.setVisibility(View.GONE);
+        }
+    }
+
+    // Refresh data in RecyclerView when the activity resumes
+    // This will also handle the case where AddTaskActivity finishes
+    // and MainActivity needs to show the new task or an empty state.
+    @Override
+    protected void onResume(){
+        super.onResume();
+        showDataInRecyclerView();
     }
 }

@@ -52,4 +52,5 @@ public class TasksDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM Tasks ORDER BY DATE(date) DESC, TIME(time) ASC", null);
     }
+
 }

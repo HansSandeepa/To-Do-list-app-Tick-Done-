@@ -10,18 +10,22 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private final List<TaskModel> tasksList;
+    private final OnTasksEmptyListener tasksEmptyListener;
 
-    public RecyclerAdapter(List<TaskModel> tasksList) {
+    public RecyclerAdapter(List<TaskModel> tasksList,OnTasksEmptyListener listener) {
         this.tasksList = tasksList;
+        this.tasksEmptyListener = listener;
     }
 
     @NonNull
@@ -40,21 +44,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.setTaskItemData(id, date, time, taskName);
 
-    //checkbox clicked listener
-        checkBoxClicked(holder,id);
+        //checkbox clicked listener
+        checkBoxClicked(holder, id);
 
         //setup red border for overdue tasks
-        setOverdueBorder(holder,id);
+        setOverdueBorder(holder, id);
     }
 
     @Override
     public int getItemCount() {
         return tasksList.size();
     }
- 
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView id,date,time,taskName;
+        private final TextView id, date, time, taskName;
         private final CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
@@ -68,7 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         }
 
-        public void setTaskItemData(int id, String date, String time, String taskName){
+        public void setTaskItemData(int id, String date, String time, String taskName) {
             this.id.setText(String.valueOf(id));
             this.date.setText(date);
             this.time.setText(time);
@@ -78,10 +82,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     /* ---Overdue task list--- */
-    private void setOverdueBorder(RecyclerAdapter.ViewHolder holder,int task_id){
+    private void setOverdueBorder(RecyclerAdapter.ViewHolder holder, int task_id) {
 
         try (TasksDatabase db = new TasksDatabase(holder.itemView.getContext())) {
-            String date,time;
+            String date, time;
 //
 //            //get today's date and current time
 //            today = TimeConversion.currentDate();
@@ -89,15 +93,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //
             //get overdue time and of event
             Cursor c = db.getTaskTimeAndDate(task_id);
-            if (c.moveToFirst()){
+            if (c.moveToFirst()) {
                 date = c.getString(0);
                 time = c.getString(1);
 
-                Log.d("DateDebug",date);
-                Log.d("DateDebug",time);
+                Log.d("DateDebug", date);
+                Log.d("DateDebug", time);
 
                 //setup overdue styles
-                if(TimeConversion.isDateTimeInThePast(date,time)){
+                if (TimeConversion.isDateTimeInThePast(date, time)) {
                     Drawable overdueBorder = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.overdue_task_item_border);
                     holder.itemView.setBackground(overdueBorder);
                     holder.taskName.setTextColor(Color.RED);
@@ -112,7 +116,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     /* ---event listeners--- */
     //checkbox clicked listener
-    private void checkBoxClicked(RecyclerAdapter.ViewHolder holder,int task_id){
+    private void checkBoxClicked(RecyclerAdapter.ViewHolder holder, int task_id) {
         holder.checkBox.setOnCheckedChangeListener(null);   //remove existing listener to prevent multiple listeners on recycler view
 
         //set new OnCheckedChangeListener for THIS specific item
@@ -122,20 +126,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 db.deleteTask(task_id);
                 int curPosition = holder.getAdapterPosition();
 
-                if(curPosition != RecyclerView.NO_POSITION){
+                if (curPosition != RecyclerView.NO_POSITION) {
                     tasksList.remove(curPosition);
                     notifyItemRemoved(curPosition);
-                    notifyItemRangeChanged(curPosition,tasksList.size());
+                    notifyItemRangeChanged(curPosition, tasksList.size());
 
-                    Toast.makeText(holder.itemView.getContext() ,"Task Completed!", Toast.LENGTH_LONG).show();
-                } else{
+                    // IMPORTANT: Use getItemCount() AFTER removing the item
+                    notifyItemRangeChanged(curPosition,getItemCount());
+
+                    Toast.makeText(holder.itemView.getContext(), "Task Completed!", Toast.LENGTH_LONG).show();
+
+                    //Check if the taskList is empty and notify the listener
+                    if (tasksList.isEmpty() && tasksEmptyListener != null){
+                        tasksEmptyListener.onTaskEmpty();
+                    }
+
+                } else {
                     Log.w("RecyclerAdapter", "Could not get valid adapter position for deletion.");
-                    Toast.makeText(holder.itemView.getContext() ,"Something went wrong!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(holder.itemView.getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
                 }
-            }
-            catch (Exception e){
-                Toast.makeText(holder.itemView.getContext() ,"Something went wrong!", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Log.d("Data load error", Objects.requireNonNull(e.getMessage()));
+                Toast.makeText(holder.itemView.getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
                 buttonView.setChecked(false);
+                throw new RuntimeException(e);
             }
         });
     }
