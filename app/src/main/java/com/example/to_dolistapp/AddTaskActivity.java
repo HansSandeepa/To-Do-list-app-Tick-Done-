@@ -3,12 +3,18 @@ package com.example.to_dolistapp;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+
 import com.example.to_dolistapp.databinding.AddTaskBinding;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -20,6 +26,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private AddTaskBinding binding;
     String taskName, selectedDate, selectTime;
     TextView selectedDateView,selectedTimeView,standardTimeView;
+    EditText taskNameField;
 
     boolean isTimeBtnSelected = false,isDateBtnSelected = false;    //used to check if date and time buttons are even clicked once
     boolean isTimeSelected = false,isDateSelected = false;    //used to check if date and time dialogs are canceled without selecting a data
@@ -40,6 +47,10 @@ public class AddTaskActivity extends AppCompatActivity {
         selectedDateView = binding.selectedDate;
         selectedTimeView = binding.selectedTime;    //this is used for human readable time format (hh:mm a)
         standardTimeView = binding.standardTimeContainer;   //this is used for standard time format (HH:mm)
+        taskNameField = binding.taskNameField;
+
+        //task name text filed caret color change
+        caretColor();
 
         //initialize the database
         db = new TasksDatabase(AddTaskActivity.this);
@@ -221,5 +232,17 @@ public class AddTaskActivity extends AppCompatActivity {
         taskName = binding.taskNameField.getText().toString();
         selectedDate = binding.selectedDate.getText().toString();
         selectTime = binding.standardTimeContainer.getText().toString();
+    }
+
+    private void caretColor(){
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                Drawable cursorDrawable = taskNameField.getTextCursorDrawable();
+                assert cursorDrawable != null;
+                DrawableCompat.setTint(cursorDrawable, ContextCompat.getColor(this, R.color.yellow));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
