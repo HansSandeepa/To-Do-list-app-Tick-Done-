@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">To-do List app</string>
+    <string name="app_name">To-Do List: Tick &amp; Done</string>
     <string name="addButton" >+</string>
     <string name="task_name">Task Name:</string>
     <string name="select_date">Select Date</string>
