@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +29,7 @@ public class AddTaskActivity extends AppCompatActivity {
     String taskName, selectedDate, selectTime;
     TextView selectedDateView,selectedTimeView,standardTimeView;
     EditText taskNameField;
-
+    Spinner reminderSpinner;
     boolean isTimeBtnSelected = false,isDateBtnSelected = false;    //used to check if date and time buttons are even clicked once
     boolean isTimeSelected = false,isDateSelected = false;    //used to check if date and time dialogs are canceled without selecting a data
     String taskNameRegex = ".{0,100}$"; //regex for validation
@@ -48,6 +50,7 @@ public class AddTaskActivity extends AppCompatActivity {
         selectedTimeView = binding.selectedTime;    //this is used for human readable time format (hh:mm a)
         standardTimeView = binding.standardTimeContainer;   //this is used for standard time format (HH:mm)
         taskNameField = binding.taskNameField;
+        reminderSpinner = binding.reminderSpinner;
 
         //task name text filed caret color change
         caretColor();
@@ -60,6 +63,9 @@ public class AddTaskActivity extends AppCompatActivity {
 
         //show time picker
         timePicker();
+
+        //setup reminder spinner
+        setupReminderSpinner();
 
         //save Tasks
         saveTask();
@@ -244,5 +250,15 @@ public class AddTaskActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void setupReminderSpinner(){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.reminder_times,
+                R.layout.custom_spinner);
+
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        reminderSpinner.setAdapter(adapter);
     }
 }
