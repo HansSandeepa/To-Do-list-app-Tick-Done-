@@ -22,14 +22,13 @@ public class TasksDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addTask(String _taskName, String _date, String _time) {
+    public long addTask(String _taskName, String _date, String _time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("task_name", _taskName);
         cv.put("date", _date);
         cv.put("time", _time);
-        long result = db.insert("Tasks", null, cv);
-        return result != -1;
+        return db.insert("Tasks", null, cv);
     }
 
     public void deleteTask(int _id) {

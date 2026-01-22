@@ -14,7 +14,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.to_dolistapp.databinding.ActivityMainBinding;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements OnTasksEmptyListe
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //setup notification channels
+        NotificationChannels.createNotificationChannels(this);
 
         // get xml components from binding class
         addTaskBtn = binding.addTaskBtn;

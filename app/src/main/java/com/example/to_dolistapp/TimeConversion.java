@@ -1,9 +1,13 @@
 package com.example.to_dolistapp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 public class TimeConversion {
     public String convertedTime(String standardTime) {
@@ -33,5 +37,21 @@ public class TimeConversion {
 
         // Compare: returns true if givenDateTime is before currentDateTime
         return givenDateTime.isBefore(currentDateTime);
+    }
+
+    public long combineDateAndTime(String dateStr,String timeStr){
+        try {
+            String dateTimeStr = dateStr + " " + timeStr;
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            Date date = sdf.parse(dateTimeStr);
+
+            assert date != null;
+            return date.getTime();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

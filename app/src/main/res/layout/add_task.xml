@@ -146,6 +146,24 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"/>
 
+        <TextView
+            android:id="@+id/reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/Reminder_tag"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+        <Spinner
+            android:id="@+id/reminder_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:minHeight="48dp" />
+
     </LinearLayout>
 
     <!-- save button area-->
