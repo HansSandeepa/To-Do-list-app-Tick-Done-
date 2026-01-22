@@ -11,8 +11,10 @@
     <string name="selected_date">Selected Date:</string>
     <string name="please_select_a_date">Please Select a date!</string>
     <string name="please_select_a_time">Please select a time!</string>
+    <string name="please_select_a_valid_time">Please select a Valid time!</string>
     <string name="no_tasks_img">no tasks img</string>
     <string name="Reminder_tag">Remind me on:</string>
+    <string name="selected_time_must_be_in_the_future">Selected time must be in the future!</string>
     <string-array name="reminder_times">
         <item>On Due Time</item>
         <item>10 Minutes Before</item>
